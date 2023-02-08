@@ -1,15 +1,13 @@
-import { Telegraf } from 'telegraf';
+import TelegramBot from 'node-telegram-bot-api';
 
 import { TELEGRAM_BOT_TOKEN } from './config';
-import { chatHandler } from './modules';
+import { messageHandler } from './modules';
 
 const start = async () => {
   try {
-    const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
+    const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
-    chatHandler(bot);
-
-    await bot.launch();
+    messageHandler(bot);
   } catch (error) {
     console.error('Error on launch', error);
   }

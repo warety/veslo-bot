@@ -1,6 +1,5 @@
-import { Context, Telegraf } from 'telegraf';
-import { Update } from 'telegraf/typings/core/types/typegram';
+import TelegramBot from 'node-telegram-bot-api';
 
-type Bot = Telegraf<Context<Update>>;
+type Bot = TelegramBot;
 
 export type { Bot };
