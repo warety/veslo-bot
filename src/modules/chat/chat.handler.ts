@@ -1,11 +1,11 @@
-import { Bot } from "types";
+import { Bot } from 'types';
 
 const chatHandler = (bot: Bot) => {
   bot.start((ctx) => ctx.reply('Welcome'));
   bot.help((ctx) => {
     ctx.reply('Send me a sticker');
   });
-  let a = 2;
+  const a = 2;
   console.log(a);
   bot.on('message', (ctx) => {
     console.log('message', ctx);
