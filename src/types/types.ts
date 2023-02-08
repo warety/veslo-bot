@@ -2,4 +2,6 @@ import TelegramBot from 'node-telegram-bot-api';
 
 type Bot = TelegramBot;
 
-export type { Bot };
+type Action = 'sendMessage';
+
+export type { Bot, Action };

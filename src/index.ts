@@ -6,7 +6,6 @@ import { messageHandler } from './modules';
 const start = async () => {
   try {
     const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
-
     messageHandler(bot);
   } catch (error) {
     console.error('Error on launch', error);
