@@ -6,7 +6,6 @@ describe('Message Logic Tests', () => {
 
   describe('Parse Text Tests', () => {
     it(`Should return "${CONSTANTS.MESSAGES.VESLO}"`, () => {
-
       const testString = 'Тут есть весло';
       const result = logic.parseText(testString);
 
@@ -14,7 +13,6 @@ describe('Message Logic Tests', () => {
     });
 
     it(`Should return nothing`, () => {
-      
       const testString = 'А тут нет';
       const result = logic.parseText(testString);
 
