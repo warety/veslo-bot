@@ -1,8 +1,19 @@
 import { CONSTANTS } from '../../../contsants';
+import { Logger } from '../../../utils/logger';
 import { messageLogic } from '../message.logic';
 
 describe('Message Logic Tests', () => {
-  const logic = messageLogic();
+
+  const loggerMock: Logger = {
+    debug: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    verbose: jest.fn(),
+    info: jest.fn(),
+    http: jest.fn(),
+    silly: jest.fn(),
+  };
+  const logic = messageLogic(loggerMock);
 
   describe('Parse Text Tests', () => {
     it(`Should return "${CONSTANTS.MESSAGES.VESLO}"`, () => {

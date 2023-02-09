@@ -1,14 +1,10 @@
 import TelegramBot from 'node-telegram-bot-api';
 
 import { TELEGRAM_BOT_TOKEN, LOGGER_LEVEL, LOGGER_CONSOLE } from './config';
-import { DefaultLogger } from './utils/logger';
+import { loggerFabric } from './utils/logger';
 import { messageHandler } from './modules';
 
-const logger = new DefaultLogger({
-  level: LOGGER_LEVEL,
-  writeToConsole: LOGGER_CONSOLE,
-  metaInfo: 'index.ts',
-});
+const logger = loggerFabric('index.ts');
 
 const start = async () => {
   try {

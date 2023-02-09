@@ -1,4 +1,6 @@
-import winston from 'winston';
+
+import winston, { format } from 'winston';
+import { LOGGER_CONSOLE, LOGGER_LEVEL } from '../config';
 
 type LogLevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
 
@@ -15,8 +17,14 @@ type LoggerConfig = {
 };
 
 type Logger = {
-  [key in LogLevel]: (msg: string) => void;
+  [key in LogLevel]: (msg: any) => void;
 };
+
+const { combine, timestamp, printf } = format;
+
+const myFormat = printf(({ level, message, timestamp }) => {
+  return `${timestamp} ${level}: ${message}`;
+});
 
 class DefaultLogger implements Logger {
   private logger: winston.Logger;
@@ -27,48 +35,63 @@ class DefaultLogger implements Logger {
     this.logger = winston.createLogger({
       level,
       defaultMeta: { service: metaInfo },
-      format: winston.format.json(),
+      format: combine(
+        timestamp(),
+        myFormat
+      ),
       transports: transports,
     });
 
     if (writeToConsole) {
       this.logger.add(
-        new winston.transports.Console({
-          format: winston.format.simple(),
-        }),
+        new winston.transports.Console({}),
       );
     }
-
-    this.logger.log('info', 'start');
   }
 
-  error(msg: string) {
+  error(msg: any) {
     this.logger.log('error', msg);
   }
 
-  warn(msg: string) {
+  warn(msg: any) {
     this.logger.log('warn', msg);
   }
 
-  info(msg: string) {
+  info(msg: any) {
     this.logger.log('info', msg);
   }
 
-  http(msg: string) {
+  http(msg: any) {
     this.logger.log('http', msg);
   }
 
-  verbose(msg: string) {
+  verbose(msg: any) {
     this.logger.log('verbose', msg);
   }
 
-  debug(msg: string) {
+  debug(msg: any) {
     this.logger.log('debug', msg);
   }
 
-  silly(msg: string) {
+  silly(msg: any) {
     this.logger.log('silly', msg);
   }
 }
 
-export { DefaultLogger, LogLevel };
+const loggerFabric = (metaInfo: string): Logger => {
+  return new DefaultLogger({
+    level: LOGGER_LEVEL,
+    writeToConsole: LOGGER_CONSOLE,
+    logFiles: [{
+      level: 'error',
+      filename: 'error.log',
+    },
+    {
+      level: 'debug',
+      filename: 'combined.log'
+    }],
+    metaInfo
+  })
+}
+
+export { loggerFabric, DefaultLogger, LogLevel, Logger };
