@@ -3,30 +3,25 @@ import winston from 'winston';
 type LogLevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
 
 type LogFile = {
-  filename: string,
-  level?: LogLevel,
+  filename: string;
+  level?: LogLevel;
 };
 
 type LoggerConfig = {
-  level: LogLevel,
-  writeToConsole?: boolean,
-  logFiles?: LogFile[],
-  metaInfo?: string,
+  level: LogLevel;
+  writeToConsole?: boolean;
+  logFiles?: LogFile[];
+  metaInfo?: string;
 };
 
 type Logger = {
   [key in LogLevel]: (msg: string) => void;
-}
+};
 
 class DefaultLogger implements Logger {
   private logger: winston.Logger;
   constructor(config: LoggerConfig) {
-    const {
-      level,
-      writeToConsole = false,
-      logFiles = [],
-      metaInfo,
-    } = config;
+    const { level, writeToConsole = false, logFiles = [], metaInfo } = config;
 
     const transports = logFiles.map(({ filename, level }) => new winston.transports.File({ filename, level }));
     this.logger = winston.createLogger({
@@ -37,11 +32,12 @@ class DefaultLogger implements Logger {
     });
 
     if (writeToConsole) {
-      this.logger.add(new winston.transports.Console({
-        format: winston.format.simple(),
-      }));
-    };
-
+      this.logger.add(
+        new winston.transports.Console({
+          format: winston.format.simple(),
+        }),
+      );
+    }
 
     this.logger.log('info', 'start');
   }
@@ -73,12 +69,6 @@ class DefaultLogger implements Logger {
   silly(msg: string) {
     this.logger.log('silly', msg);
   }
-
-};
-
-export {
-  DefaultLogger,
-  LogLevel
 }
 
-
+export { DefaultLogger, LogLevel };

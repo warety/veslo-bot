@@ -1,6 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
 
-
 import { TELEGRAM_BOT_TOKEN, LOGGER_LEVEL, LOGGER_CONSOLE } from './config';
 import { DefaultLogger } from './utils/logger';
 import { messageHandler } from './modules';
