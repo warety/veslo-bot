@@ -1,1 +1,1 @@
-export { TELEGRAM_BOT_TOKEN } from './config';
+export { TELEGRAM_BOT_TOKEN, LOGGER_LEVEL, LOGGER_CONSOLE } from './config';

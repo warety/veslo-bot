@@ -1,1 +1,1 @@
-export type { Bot } from './types';
+export type { Bot, Action } from './types';
