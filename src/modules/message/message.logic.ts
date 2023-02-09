@@ -4,7 +4,7 @@ import { Logger } from '../../utils/logger';
 const messageLogic = (logger: Logger) => {
   const parseText = (text: string): { message?: string; action: string } => {
     if (text.toLowerCase().includes('весло'.toLowerCase())) {
-      logger.debug(`Found in text: ${text}`)
+      logger.debug(`Found in text: ${text}`);
       return {
         message: CONSTANTS.MESSAGES.VESLO,
         action: CONSTANTS.ACTIONS.SEND_MESSAGE,

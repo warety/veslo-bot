@@ -3,7 +3,6 @@ import { Logger } from '../../../utils/logger';
 import { messageLogic } from '../message.logic';
 
 describe('Message Logic Tests', () => {
-
   const loggerMock: Logger = {
     debug: jest.fn(),
     error: jest.fn(),

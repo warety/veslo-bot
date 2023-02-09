@@ -1,4 +1,3 @@
-
 import winston, { format } from 'winston';
 import { LOGGER_CONSOLE, LOGGER_LEVEL } from '../config';
 
@@ -35,17 +34,12 @@ class DefaultLogger implements Logger {
     this.logger = winston.createLogger({
       level,
       defaultMeta: { service: metaInfo },
-      format: combine(
-        timestamp(),
-        myFormat
-      ),
+      format: combine(timestamp(), myFormat),
       transports: transports,
     });
 
     if (writeToConsole) {
-      this.logger.add(
-        new winston.transports.Console({}),
-      );
+      this.logger.add(new winston.transports.Console({}));
     }
   }
 
@@ -82,16 +76,18 @@ const loggerFabric = (metaInfo: string): Logger => {
   return new DefaultLogger({
     level: LOGGER_LEVEL,
     writeToConsole: LOGGER_CONSOLE,
-    logFiles: [{
-      level: 'error',
-      filename: 'error.log',
-    },
-    {
-      level: 'debug',
-      filename: 'combined.log'
-    }],
-    metaInfo
-  })
-}
+    logFiles: [
+      {
+        level: 'error',
+        filename: 'error.log',
+      },
+      {
+        level: 'debug',
+        filename: 'combined.log',
+      },
+    ],
+    metaInfo,
+  });
+};
 
 export { loggerFabric, DefaultLogger, LogLevel, Logger };
