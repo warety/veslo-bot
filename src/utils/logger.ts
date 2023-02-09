@@ -19,11 +19,9 @@ type Logger = {
   [key in LogLevel]: (msg: any) => void;
 };
 
-const { combine, timestamp, printf } = format;
+const { combine, timestamp } = format;
 
-const myFormat = printf(({ level, message, timestamp }) => {
-  return `${timestamp} ${level}: ${message}`;
-});
+
 
 class DefaultLogger implements Logger {
   private logger: winston.Logger;
@@ -34,7 +32,7 @@ class DefaultLogger implements Logger {
     this.logger = winston.createLogger({
       level,
       defaultMeta: { service: metaInfo },
-      format: combine(timestamp(), myFormat),
+      format: combine(timestamp(), format.json()),
       transports: transports,
     });
 

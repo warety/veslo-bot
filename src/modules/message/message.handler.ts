@@ -1,7 +1,6 @@
 import { CONSTANTS } from '../../contsants';
 import { Bot } from '../../types';
-import { actionMapper } from '../../utils';
-import { loggerFabric } from '../../utils/logger';
+import { actionMapper, loggerFabric } from '../../utils';
 import { messageLogic } from './message.logic';
 
 const messageHandler = (bot: Bot) => {
@@ -11,12 +10,23 @@ const messageHandler = (bot: Bot) => {
   bot.on('message', (msg) => {
     try {
       logger.debug(msg);
-      const { chat, text = '' } = msg;
+      const { chat, text = '', from, message_id } = msg;
       const { id: chatId } = chat;
-      const { message = '', action } = logic.parseText(text);
 
-      if (action === CONSTANTS.ACTIONS.DO_NOTHING) return;
-      bot[actionMapper(action)](chatId, message);
+      const actions = [];
+
+      if (from) {
+        actions.push(logic.parseUser(from.id));
+      }
+
+      actions.push(logic.parseText(text));
+
+      actions.forEach(({ message = '', action }) => {
+        if (action === CONSTANTS.ACTIONS.DO_NOTHING) return;
+        bot[actionMapper(action)](chatId, message, {
+          reply_to_message_id: message_id
+        });
+      });
     } catch (error) {
       logger.error(`${error}`);
     }
