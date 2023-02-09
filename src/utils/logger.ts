@@ -21,8 +21,6 @@ type Logger = {
 
 const { combine, timestamp } = format;
 
-
-
 class DefaultLogger implements Logger {
   private logger: winston.Logger;
   constructor(config: LoggerConfig) {

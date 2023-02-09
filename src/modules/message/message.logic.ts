@@ -26,7 +26,7 @@ const messageLogic = (logger: Logger) => {
     return {
       action: CONSTANTS.ACTIONS.DO_NOTHING,
     };
-  }
+  };
 
   return {
     parseText,

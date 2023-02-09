@@ -19,7 +19,7 @@ describe('Message Logic Tests', () => {
       const testString = 'Тут есть весло';
       const result = logic.parseText(testString);
 
-      expect(result?.message).toBe(CONSTANTS.MESSAGES.VESLO);
+      expect(result?.message).toBe(CONSTANTS.STICKERS.VESLO);
     });
 
     it(`Should return nothing`, () => {

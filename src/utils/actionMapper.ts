@@ -7,7 +7,7 @@ const actionMapper = (action: string): Action => {
     case CONSTANTS.ACTIONS.SEND_MESSAGE:
       return 'sendMessage';
     case CONSTANTS.ACTIONS.SEND_STICKER:
-      return 'sendSticker'
+      return 'sendSticker';
     default:
       throw new Error(CONSTANTS.ERRORS.ACTIONS.CANNOT_MAP_ERROR);
   }

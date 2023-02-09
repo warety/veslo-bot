@@ -24,7 +24,7 @@ const messageHandler = (bot: Bot) => {
       actions.forEach(({ message = '', action }) => {
         if (action === CONSTANTS.ACTIONS.DO_NOTHING) return;
         bot[actionMapper(action)](chatId, message, {
-          reply_to_message_id: message_id
+          reply_to_message_id: message_id,
         });
       });
     } catch (error) {
