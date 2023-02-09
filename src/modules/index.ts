@@ -1,1 +1,1 @@
-export { chatHandler } from './chat';
+export { messageHandler } from './message';
