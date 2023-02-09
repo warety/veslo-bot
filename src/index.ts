@@ -6,7 +6,7 @@ import { messageHandler } from './modules';
 
 const logger = new DefaultLogger({
   level: LOGGER_LEVEL,
-  writeToConsole: true,
+  writeToConsole: LOGGER_CONSOLE,
   metaInfo: 'index.ts',
 });
 
