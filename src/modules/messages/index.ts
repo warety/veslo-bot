@@ -4,7 +4,6 @@ import { mapMessageToDomain } from './message.mapper';
 import { CONSTANTS } from '../../contsants';
 import { loggerFabric } from '../../utils';
 
-
 const defaultRules = [
   {
     triggerWords: [CONSTANTS.TRIGGER_WORD.VESLO, 'test'],
@@ -17,8 +16,7 @@ const defaultRules = [
 
 const rulesStorageTest = {
   retrieveRules: () => Promise.resolve(defaultRules),
-}
-
+};
 
 const processMessage = makeProcessMessage({ rulesStorage: rulesStorageTest });
 
@@ -26,6 +24,6 @@ const messageHandler = makeMessageHandler({
   processMessage,
   messageMapper: mapMessageToDomain,
   logger: loggerFabric('messages'),
-})
+});
 
 export { messageHandler };

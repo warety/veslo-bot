@@ -5,11 +5,14 @@ import { Reaction } from '../../domain/rule';
 import { Bot } from '../../types';
 import { actionMapper, Logger } from '../../utils';
 
-
-const makeMessageHandler = ({ processMessage, messageMapper, logger }: {
-  processMessage: (message: Message) => Promise<Reaction[]>,
-  messageMapper: (msg: TelegramBot.Message) => Message,
-  logger: Logger
+const makeMessageHandler = ({
+  processMessage,
+  messageMapper,
+  logger,
+}: {
+  processMessage: (message: Message) => Promise<Reaction[]>;
+  messageMapper: (msg: TelegramBot.Message) => Message;
+  logger: Logger;
 }) => {
   const messageHandler = (bot: Bot) => {
     bot.on('message', async (msg) => {
@@ -32,8 +35,7 @@ const makeMessageHandler = ({ processMessage, messageMapper, logger }: {
     });
   };
 
-  return messageHandler
-}
-
+  return messageHandler;
+};
 
 export { makeMessageHandler };

@@ -26,7 +26,7 @@ describe('Proccess Message Tests', () => {
     },
   ];
 
-  const processMessage = makeProcessMessage({ rulesStorage: { retrieveRules: () => Promise.resolve(defaultRules) } })
+  const processMessage = makeProcessMessage({ rulesStorage: { retrieveRules: () => Promise.resolve(defaultRules) } });
 
   describe('Parse Text Tests', () => {
     it(`Should return "${CONSTANTS.MESSAGES.VESLO}"`, async () => {

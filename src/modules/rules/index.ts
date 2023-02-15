@@ -1,1 +1,1 @@
-export { rulesHandler } from './rules.handler'
+export { rulesHandler } from './rules.handler';
