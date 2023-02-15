@@ -1,2 +1,2 @@
 export { actionMapper } from './actionMapper';
-export { loggerFabric, Logger, LogLevel } from './logger';
+export { createLogger, Logger, LogLevel } from './logger';

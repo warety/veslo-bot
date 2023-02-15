@@ -1,6 +1,7 @@
 import { CONSTANTS } from '../../../contsants';
 import { Message } from '../../../domain/message';
-import { makeProcessMessage } from '../message.useCase';
+import { rulesStorageMock } from '../../../services/mocks';
+import { injectedProcessMessage } from '../message.useCase';
 
 describe('Proccess Message Tests', () => {
   const message: Message = {
@@ -16,17 +17,7 @@ describe('Proccess Message Tests', () => {
     },
   };
 
-  const defaultRules = [
-    {
-      triggerWords: [CONSTANTS.TRIGGER_WORD.VESLO, 'test'],
-      reaction: {
-        message: CONSTANTS.STICKERS.VESLO,
-        action: CONSTANTS.ACTIONS.SEND_STICKER,
-      },
-    },
-  ];
-
-  const processMessage = makeProcessMessage({ rulesStorage: { retrieveRules: () => Promise.resolve(defaultRules) } });
+  const processMessage = injectedProcessMessage({ rulesStorage: rulesStorageMock() });
 
   describe('Parse Text Tests', () => {
     it(`Should return "${CONSTANTS.MESSAGES.VESLO}"`, async () => {

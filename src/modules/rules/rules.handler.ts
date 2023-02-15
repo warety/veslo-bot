@@ -1,20 +1,42 @@
+import { CONSTANTS } from '../../contsants';
+import { Rule } from '../../domain/rule';
+import { NotAuthorizedError } from '../../errors';
 import { Bot } from '../../types';
-import { loggerFabric } from '../../utils';
+import { Logger } from '../../utils';
+import { errorMapper } from '../../utils/errorMapper';
+import { mapRawRulesToDomain } from './rules.mapper';
 
-const rulesHandler = (bot: Bot) => {
-  const logger = loggerFabric('rules');
+const injectedRulesHandler = ({
+  addRules,
+  logger,
+}: {
+  addRules: (rules: Rule[]) => Promise<Rule[]>;
+  logger: Logger;
+}) => {
+  const isAuthorized = (userId?: number) => userId === CONSTANTS.USER_IDS.FAMITA;
 
-  bot.onText(/\/configure (.+)/, async (msg) => {
-    try {
-      logger.info(msg);
-      const { chat, message_id } = msg;
-      const { id: chatId } = chat;
+  const rulesHandler = (bot: Bot) => {
+    bot.onText(/\/configure (.+)/, async (msg) => {
+      try {
+        logger.info(msg);
+        const { chat, text = '', from } = msg;
+        const { id: chatId } = chat;
 
-      bot.sendMessage(chatId, 'salam voram');
-    } catch (error) {
-      logger.error(`${error}`);
-    }
-  });
+        if (!isAuthorized(from?.id)) throw new NotAuthorizedError();
+
+        const rules = mapRawRulesToDomain(JSON.parse(text.slice(11)));
+        await addRules(rules);
+        bot.sendMessage(chatId, CONSTANTS.MESSAGES.SUCCESS);
+      } catch (error) {
+        logger.error(`${error}`);
+        bot.sendMessage(msg.chat.id, errorMapper(error), {
+          reply_to_message_id: msg.message_id,
+        });
+      }
+    });
+  };
+
+  return rulesHandler;
 };
 
-export { rulesHandler };
+export { injectedRulesHandler };

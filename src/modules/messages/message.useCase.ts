@@ -1,18 +1,21 @@
-import { applyRuleToMessage, Message } from '../../domain/message';
+import { CONSTANTS } from '../../contsants';
+import { isWordsInText, Message } from '../../domain/message';
 import { Reaction, Rule } from '../../domain/rule';
+import { RulesStorage } from '../../services/rulesStorage';
 
-interface RulesStorage {
-  retrieveRules: () => Promise<Rule[]>;
-}
+const injectedProcessMessage = ({ rulesStorage }: { rulesStorage: RulesStorage }) => {
+  const applyRuleToMessage = (message: Message, rule: Rule): Reaction => {
+    const { text = '' } = message;
+    if (isWordsInText(text.toLowerCase(), rule.triggerWords)) return rule.reaction;
+    return { action: CONSTANTS.ACTIONS.DO_NOTHING };
+  };
 
-const makeProcessMessage = ({ rulesStorage }: { rulesStorage: RulesStorage }) => {
   const processMessage = async (message: Message): Promise<Reaction[]> => {
     const rules = await rulesStorage.retrieveRules();
-
     return rules.map((rule) => applyRuleToMessage(message, rule));
   };
 
   return processMessage;
 };
 
-export { makeProcessMessage };
+export { injectedProcessMessage };

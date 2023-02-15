@@ -5,6 +5,9 @@ import { Reaction } from '../../domain/rule';
 import { Bot } from '../../types';
 import { actionMapper, Logger } from '../../utils';
 
+const isBotCommand = (entities?: TelegramBot.MessageEntity[]) =>
+  entities?.some((entity) => entity.type === 'bot_command');
+
 const makeMessageHandler = ({
   processMessage,
   messageMapper,
@@ -17,8 +20,9 @@ const makeMessageHandler = ({
   const messageHandler = (bot: Bot) => {
     bot.on('message', async (msg) => {
       try {
-        logger.debug(msg);
-        const { chat, message_id } = msg;
+        logger.info(msg);
+        const { chat, message_id, entities } = msg;
+        if (isBotCommand(entities)) return;
         const { id: chatId } = chat;
 
         const actions = await processMessage(messageMapper(msg));

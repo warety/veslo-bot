@@ -68,7 +68,7 @@ class DefaultLogger implements Logger {
   }
 }
 
-const loggerFabric = (metaInfo: string): Logger => {
+const createLogger = (metaInfo: string): Logger => {
   return new DefaultLogger({
     level: LOGGER_LEVEL,
     writeToConsole: LOGGER_CONSOLE,
@@ -86,4 +86,4 @@ const loggerFabric = (metaInfo: string): Logger => {
   });
 };
 
-export { loggerFabric, DefaultLogger, LogLevel, Logger };
+export { createLogger, DefaultLogger, LogLevel, Logger };

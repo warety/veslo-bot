@@ -1,29 +1,12 @@
-import { CONSTANTS } from '../../contsants';
-import { applyRuleToMessage, Message } from '../../domain/message';
-import { Reaction, Rule } from '../../domain/rule';
+import { Rule } from '../../domain/rule';
+import { RulesStorage } from '../../services/rulesStorage';
 
-interface RulesStorage {
-  retrieveRules: () => Promise<Rule[]>;
-}
-
-const defaultRules = [
-  {
-    triggerWords: [CONSTANTS.TRIGGER_WORD.VESLO, 'test'],
-    reaction: {
-      message: CONSTANTS.STICKERS.VESLO,
-      action: CONSTANTS.ACTIONS.SEND_STICKER,
-    },
-  },
-];
-
-const processMessage = async (message: Message): Promise<Reaction[]> => {
-  const rulesStorage: RulesStorage = {
-    retrieveRules: async () => Promise.resolve(defaultRules),
+const injectedAddRules = ({ rulesStorage }: { rulesStorage: RulesStorage }) => {
+  const addRules = async (rules: Rule[]): Promise<Rule[]> => {
+    return await rulesStorage.addRulesBulk(rules);
   };
 
-  const rules = await rulesStorage.retrieveRules();
-
-  return rules.map((rule) => applyRuleToMessage(message, rule));
+  return addRules;
 };
 
-export { processMessage };
+export { injectedAddRules };
