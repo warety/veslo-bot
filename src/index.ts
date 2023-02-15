@@ -2,7 +2,7 @@ import TelegramBot from 'node-telegram-bot-api';
 
 import { TELEGRAM_BOT_TOKEN } from './config';
 import { loggerFabric } from './utils/logger';
-import { messageHandler } from './modules';
+import { messageHandler, rulesHandler } from './modules';
 
 const logger = loggerFabric('index.ts');
 
@@ -11,6 +11,7 @@ const start = async () => {
     const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
     logger.info('Bot started');
     messageHandler(bot);
+    rulesHandler(bot);
   } catch (error) {
     logger.error(`Error on launch ${error}`);
   }

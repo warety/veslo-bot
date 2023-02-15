@@ -1,1 +1,2 @@
-export { messageHandler } from './message';
+export { messageHandler } from './messages';
+export { rulesHandler } from './rules';

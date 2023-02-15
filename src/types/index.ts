@@ -1,1 +1,1 @@
-export type { Bot, Action } from './types';
+export type { Bot, Action, BotMessage, BotListener, BotMetadata } from './types';

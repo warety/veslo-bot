@@ -3,6 +3,9 @@ const CONSTANTS = {
     ACTIONS: {
       CANNOT_MAP_ERROR: 'Cannot map action',
     },
+    MESSAGES: {
+      NOT_AUTTHORIZED: 'Пошел нахуй',
+    },
   },
   MESSAGES: {
     VESLO: 'А вот и весло',
