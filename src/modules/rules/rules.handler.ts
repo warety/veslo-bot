@@ -13,7 +13,7 @@ const injectedRulesHandler = ({
   addRules: (rules: Rule[]) => Promise<Rule[]>;
   logger: Logger;
 }) => {
-  const isAuthorized = (userId?: number) => userId === CONSTANTS.USER_IDS.FAMITA;
+  const isAuthorized = (userId?: number) => userId === CONSTANTS.USER_IDS.LEHA;
 
   const rulesHandler = (bot: Bot) => {
     bot.onText(/\/configure (.+)/, async (msg) => {
