@@ -17,15 +17,15 @@ describe('Proccess Message Tests', () => {
     },
   };
 
-  const rulesStorage = rulesStorageMock()
+  const rulesStorage = rulesStorageMock();
 
   rulesStorage.addRule({
-    triggerWords: ["Неверный запрос, либо запрос содержит непонятные слова"],
+    triggerWords: ['Неверный запрос, либо запрос содержит непонятные слова'],
     reaction: {
       message: 'test',
       action: 'sendMessage',
-    }
-  })
+    },
+  });
 
   const processMessage = injectedProcessMessage({ rulesStorage });
 
@@ -52,12 +52,11 @@ describe('Proccess Message Tests', () => {
     it('Should return action sendMessage', async () => {
       const testString = 'Неверный запрос, либо запрос содержит непонятные слова';
 
-
       const testMessage = { ...message, text: testString };
       const result = await processMessage(testMessage);
 
       expect(result[1].message).toBe('test');
       expect(result[1].action).toBe('sendMessage');
-    })
+    });
   });
 });
