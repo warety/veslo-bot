@@ -10,7 +10,7 @@ type Message = {
   text?: MessageText;
 };
 
-const isWordsInText = (text: MessageText, words: string[]) => words.some((word) => text.includes(word));
+const isWordsInText = (text: MessageText, words: string[]) => words.some((word) => text.toLowerCase().includes(word.toLowerCase()));
 
 export type { Message, MessageText };
 
